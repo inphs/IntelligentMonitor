@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>联诺智能监控系统</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/css/main.css" asp-append-version="true" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <div class="nav">
+            <div class="nav-header">
+                <a href="@Url.Action("Index", "Home")" class="nav-header-brand">
+                    <img src="~/imgs/logo_white.png" />
+                </a>
+            </div>
+            <div class="nav-time">
+                <span title="菜单">
+                    <i class="layui-icon layui-icon-shrink-right"></i>
+                </span>
+                <span title="全屏">
+                    <i class="layui-icon layui-icon-screen-full"></i>
+                </span>
+                <span>
+                    <i class="layui-icon layui-icon-user"></i>
+                    @User.Identity.Name !
+                </span>
+                <span>
+                    当前时间：@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                </span>
+            </div>
+            <div class="nav-title">
+                <p>联诺智能监控系统</p>
+            </div>
+            <div class="nav-menu layui-hide">
+                <div class="user">
+                    <p>@User.Identity.Name !</p>
+                    <p>
+                        <a class="layui-btn layui-btn-primary" href="@Url.Action("Back", "Home")">进入后台</a>
+                        <a class="layui-btn layui-btn-primary" href="@Url.Action("Logout", "Account")">安全退出</a>
+                    </p>
+                </div>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>主题切换</legend>
+                </fieldset>
+                <div class="theme">
+                    <div class="layui-row"></div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="layui-row"></div>
+        </div>
+    </div>
+    <script src="~/js/jquery-2.1.1.min.js"></script>
+    <script src="~/js/echarts.min.js"></script>
+    <script src="~/js/mSlider.min.js"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    @if ((await AuthorizationService.AuthorizeAsync(User, null, new PermissionAuthorizationRequirement(IntelligentMonitor.Authorization.Permissions.UserEditor))).Succeeded)
+    {
+        <script src="~/js/jquery.dad.min.js"></script>
+        <script>
+            $('.content .layui-row').dad();
+        </script>
+    }
+    </body>
+</html>
